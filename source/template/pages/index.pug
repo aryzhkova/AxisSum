@@ -1,0 +1,20 @@
+extends ../_template
+
+block variables
+    - var title = 'Main'
+
+block content
+    .wrapper
+        .maincontent
+            header.header
+                h3.title Решите пример:
+            section.section
+                .example
+                    span.item.item1
+                    span.operation +
+                    span.item.item2
+                    span.equal =
+                    input.input.input_sum(id="sum" name="sum" type="text")
+                .wrap-axis
+                    canvas.axis(id="axis" width="875" height="400")
+        footer.footer

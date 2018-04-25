@@ -1,0 +1,89 @@
+body,html{
+  height: 100%;
+  font-family: "Tahoma";
+}
+.wrapper{
+  position: relative;
+  height: 100%;
+  min-width: 960px;
+}
+.maincontent{
+  position: relative;
+  min-height: 100%;
+}
+.header{
+  position: relative;
+  padding: 40px;
+}
+.title{
+  position: relative;
+  text-align: center;
+}
+.section{
+  position: relative;
+}
+.example{
+  position: relative;
+  width: 90%;
+  margin: auto;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 0;
+}
+.item{
+  position: relative;
+  display: inline-block;
+  padding: 10px;
+  vertical-align: middle;
+  margin-right: 5px;
+  font-size: 20px;
+  width:20px;
+  text-align: center;
+  border-radius: 5px;
+}
+.operation, .equal{
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px;
+  font-size: 20px;
+}
+.wrap-axis{
+  position: relative;
+  width: 875px;
+  margin: auto;
+}
+.axis{
+  position: relative;
+  width: 875px;
+  height: 400px;
+  background:url("../img/sprite.png") bottom no-repeat;
+}
+
+.input{
+  position: absolute;
+  width: 20px;
+  font-size: 20px;
+  transform: translate(-50%,-50%);
+  text-align: center;
+  outline: none;
+  border:1px solid lightgrey;
+  border-radius: 5px;
+  &_sum{
+    position: relative;
+    transform: none;
+    padding: 10px;
+    vertical-align: middle;
+  }
+  &:disabled{
+    background: transparent;
+    border-color: transparent ;
+  }
+}
+
+.error_fc{
+  color: red;
+}
+.error_bg{
+  background-color: orange;
+}
