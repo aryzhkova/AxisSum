@@ -87,7 +87,7 @@ var sumItems = (function () {
     function createItemInput(name,s){
         var el = document.createElement('INPUT');
         $(el).attr({
-            "class" : "input input_"+name,
+            "class" : "input input_item input_"+name,
             "id" : name,
             "type" : "text",
             "name" : name
@@ -100,7 +100,9 @@ var sumItems = (function () {
         $(el).focus();
         $(el).keydown(function (e) {
             if (e.keyCode === 13) {
-                inputItemHandler($(this));
+                if(validate($(this))){
+                    inputItemHandler($(this));
+                }
             }
         });
     }
@@ -136,14 +138,45 @@ var sumItems = (function () {
             $("."+name).addClass('error_bg');
         }
     }
-
+    function validate(input){
+        var error = 0;
+        var rv_item = /^[0-9]$/;
+        var rv_sum = /^[0-9]{2}$/;
+        var errorMsg ="";
+        if (input.hasClass('input_sum')){
+            if(!rv_sum.test(input.val())){
+                error = 2;
+                errorMsg  = "Нужно ввести двузначное число";
+                input.addClass('error_bg');
+            }else{
+                input.removeClass('error_bg');
+            }
+        }
+        if(input.hasClass('input_item')){
+            if(!rv_item.test(input.val())){
+                error = 1;
+                errorMsg = "Нужно ввести однозначное число";
+                input.addClass('error_bg');
+            }else{
+                input.removeClass('error_bg');
+            }
+        }
+        $('.status').html(errorMsg);
+        if (error == 0){
+            return true
+        }else{
+            return false
+        }
+    }
     return{
         init:function () {
             setItems();
             drawCurve(0,item1);
             sumInput.keydown(function (e) {
                 if (e.keyCode === 13) {
-                    inputSumHandler($(this));
+                    if(validate($(this))){
+                        inputSumHandler($(this));
+                    }
                 }
             });
         }
