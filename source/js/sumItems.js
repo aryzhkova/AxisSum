@@ -22,6 +22,7 @@ var sumItems = (function () {
         $('.item2').text(item2);
         sumInput.val("?");
         sumInput.prop("disabled",true);
+        sumInput.prop("maxlength",getSum().toString().length);
     }
     function resetItems() {
         ctx.clearRect(0,0,875,400);
@@ -90,7 +91,8 @@ var sumItems = (function () {
             "class" : "input input_item input_"+name,
             "id" : name,
             "type" : "text",
-            "name" : name
+            "name" : name,
+            "maxlength" : $("."+name).text().length
         });
         $(el).css({
             "left" : s,
@@ -98,17 +100,22 @@ var sumItems = (function () {
         });
         wrapCanvas.append(el);
         $(el).focus();
-        $(el).keydown(function (e) {
-            if (e.keyCode === 13) {
-                if(validate($(this))){
-                    inputItemHandler($(this));
-                }
+        $(el).keypress(function (e) {
+            if(e.keyCode === 8){
+                return true;
+            }
+            if( e.keyCode === 13){
+                inputItemHandler($(this));
+            }
+            if(e.keyCode < 48 || e.keyCode > 57 ){
+                return false;
             }
         });
     }
     function inputSumHandler(input) {
         var value = input.val();
-        var sum = parseInt($('.item1').text())+parseInt($('.item2').text());
+        var sum = getSum();
+       // var sum = parseInt($('.item1').text())+parseInt($('.item2').text());
         if( sum == value){
             input.prop("disabled",true);
             input.removeClass('error_fc');
@@ -138,47 +145,26 @@ var sumItems = (function () {
             $("."+name).addClass('error_bg');
         }
     }
-    function validate(input){
-        var error = 0;
-        var rv_item = /^[0-9]$/;
-        var rv_sum = /^[0-9]{2}$/;
-        var value = input.val().trim();
-        input.val(value);
-        var errorMsg ="";
-        if (input.hasClass('input_sum')){
-            if(!rv_sum.test(value)){
-                error = 2;
-                errorMsg  = "Нужно ввести двузначное число";
-                input.addClass('error_bg');
-            }else{
-                input.removeClass('error_bg');
-            }
-        }
-        if(input.hasClass('input_item')){
-            if(!rv_item.test(value)){
-                error = 1;
-                errorMsg = "Нужно ввести однозначное число";
-                input.addClass('error_bg');
-            }else{
-                input.removeClass('error_bg');
-            }
-        }
-        $('.status').html(errorMsg);
-        if (error == 0){
-            return true
-        }else{
-            return false
-        }
+    function getSum(){
+        var sum = 0;
+        $('.item').each(function () {
+            sum = sum +  parseInt($(this).text());
+        });
+        return sum;
     }
     return{
         init:function () {
             setItems();
             drawCurve(0,item1);
             sumInput.keydown(function (e) {
-                if (e.keyCode === 13) {
-                    if(validate($(this))){
-                        inputSumHandler($(this));
-                    }
+                if(e.keyCode === 8){
+                    return true;
+                }
+                if( e.keyCode === 13){
+                    inputSumHandler($(this));
+                }
+                if(e.keyCode < 48 || e.keyCode > 57 ){
+                    return false;
                 }
             });
         }
