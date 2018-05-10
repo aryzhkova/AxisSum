@@ -142,9 +142,11 @@ var sumItems = (function () {
         var error = 0;
         var rv_item = /^[0-9]$/;
         var rv_sum = /^[0-9]{2}$/;
+        var value = input.val().trim();
+        input.val(value);
         var errorMsg ="";
         if (input.hasClass('input_sum')){
-            if(!rv_sum.test(input.val())){
+            if(!rv_sum.test(value)){
                 error = 2;
                 errorMsg  = "Нужно ввести двузначное число";
                 input.addClass('error_bg');
@@ -153,7 +155,7 @@ var sumItems = (function () {
             }
         }
         if(input.hasClass('input_item')){
-            if(!rv_item.test(input.val())){
+            if(!rv_item.test(value)){
                 error = 1;
                 errorMsg = "Нужно ввести однозначное число";
                 input.addClass('error_bg');
